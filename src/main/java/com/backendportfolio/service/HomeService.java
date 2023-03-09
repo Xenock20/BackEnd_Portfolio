@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface HomeService {
     
-    HomeEntity mostrarHome();
+    List<HomeEntity> mostrarHome();
     
     HomeEntity actualizarHome(Long id, HomeEntity homeEntity);
     
-    SkillEntity mostrarSkills(Long id);
+    List<SkillEntity> mostrarSkills(Long id);
     
-    ContactEntity mostrarContact(Long id);
+    List<ContactEntity> mostrarContact(Long id);
     
     SkillEntity actualizarSkills(Long id, SkillEntity skillEntity);
     

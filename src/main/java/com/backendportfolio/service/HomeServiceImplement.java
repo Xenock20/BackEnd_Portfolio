@@ -3,7 +3,9 @@ package com.backendportfolio.service;
 
 import com.backendportfolio.model.*;
 import com.backendportfolio.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,33 +32,77 @@ public class HomeServiceImplement implements HomeService{
     
     
     @Override
-    public HomeEntity mostrarHome() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<HomeEntity> mostrarHome() {
+        return homeRepository.findAll();
     }
 
     @Override
-    public HomeEntity actualizarHome(Long id, HomeEntity homeEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public HomeEntity actualizarHome(Long id, HomeEntity homeActualizado) {
+        
+        Optional<HomeEntity> homeExitente = homeRepository.findById(id);
+        
+        if(homeExitente.isPresent()){
+            HomeEntity home = homeExitente.get();
+            
+            home.setNombreCompleto(homeActualizado.getNombreCompleto());
+            home.setTituloHome(homeActualizado.getTituloHome());
+            home.setDescripcionHome(homeActualizado.getDescripcionHome());
+            home.setUrlImageHome(homeActualizado.getUrlImageHome());
+            
+            return home;
+        } else {
+            throw new EntityNotFoundException("Objeto no encontrado");
+        }
     }
 
     @Override
-    public SkillEntity mostrarSkills(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<SkillEntity> mostrarSkills(Long id) {
+        return skillRepository.findAll();
     }
 
     @Override
-    public ContactEntity mostrarContact(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<ContactEntity> mostrarContact(Long id) {
+        return contactRepository.findAll();
     }
 
     @Override
-    public SkillEntity actualizarSkills(Long id, SkillEntity skillEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public SkillEntity actualizarSkills(Long id, SkillEntity skillActualizado) {
+        Optional<SkillEntity> skillExitente = skillRepository.findById(id);
+        
+        if(skillExitente.isPresent()){
+            SkillEntity skill = skillExitente.get();
+            
+            skill.setAngularSkill(skillActualizado.isAngularSkill());
+            skill.setCssSkill(skillActualizado.isCssSkill());
+            skill.setDbSkill(skillActualizado.isDbSkill());
+            skill.setHtmlSkill(skillActualizado.isHtmlSkill());
+            skill.setJavaScriptSkill(skillActualizado.isJavaScriptSkill());
+            skill.setJavaSkill(skillActualizado.isJavaSkill());
+            skill.setPythonSkill(skillActualizado.isPythonSkill());
+            skill.setReactSkill(skillActualizado.isReactSkill());
+            
+            return skill;
+        } else {
+            throw new EntityNotFoundException("Objeto no encontrado");
+        }
     }
 
     @Override
-    public ContactEntity actualizarContact(Long id, ContactEntity contactEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ContactEntity actualizarContact(Long id, ContactEntity contactActualizado) {
+        Optional<ContactEntity> contactExitente = contactRepository.findById(id);
+        
+        if(contactExitente.isPresent()){
+            ContactEntity contact = contactExitente.get();
+            
+            contact.setEmail(contactActualizado.getEmail());
+            contact.setGitHub(contactActualizado.getGitHub());
+            contact.setIg(contactActualizado.getIg());
+            contact.setLinkedin(contactActualizado.getLinkedin());
+            
+            return contact;
+        } else {
+            throw new EntityNotFoundException("Objeto no encontrado");
+        }
     }
 
     @Override
