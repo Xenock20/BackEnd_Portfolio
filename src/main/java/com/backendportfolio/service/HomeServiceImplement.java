@@ -7,7 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -121,7 +121,6 @@ public class HomeServiceImplement implements HomeService{
     public List<ProjectEntity> mostrarProjects() {
         return projectRepository.findAll();
     }
-
     
     @Override
     public EducacionEntity agregarEduacion(Long idHome, EducacionEntity educacionEntity){
@@ -130,7 +129,6 @@ public class HomeServiceImplement implements HomeService{
             return educacionRepository.save(educacionEntity);
         }).orElseThrow(() -> new EntityNotFoundException("Error en agregar una educacion"));
     }
-
     
     @Override
     public ExperienciaEntity agregarExperiencia(Long idHome, ExperienciaEntity experienciaEntity) {
@@ -147,7 +145,6 @@ public class HomeServiceImplement implements HomeService{
             return projectRepository.save(projectEntity);
         }).orElseThrow(() -> new EntityNotFoundException("Error en agregar un proyecto"));
     }
-
     
     @Override
     public EducacionEntity actualizarEducacion(Long idEduacion, EducacionEntity educacionEntity) {
@@ -182,8 +179,7 @@ public class HomeServiceImplement implements HomeService{
             return projectRepository.save(project);
         }).orElseThrow(() -> new EntityNotFoundException("Error en actualizar un proyecto"));
     }
-    
-/*
+
     @Override
     public ResponseEntity<?> eliminarEducacion(Long idEduacion) {
         return educacionRepository.findById(idEduacion).map(educacion -> {
@@ -207,5 +203,4 @@ public class HomeServiceImplement implements HomeService{
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new EntityNotFoundException("Error en eliminar un proyecto"));
     }
-    */
 }
