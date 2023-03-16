@@ -27,19 +27,20 @@ public interface HomeService {
     
     List<ProjectEntity> mostrarProjects();
     
-    /*
+    
     EducacionEntity agregarEduacion(Long idHome, EducacionEntity educacionEntity);
     
     ExperienciaEntity agregarExperiencia(Long idHome, ExperienciaEntity experienciaEntity);
     
     ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity);
     
+    
     EducacionEntity actualizarEducacion(Long idEduacion, EducacionEntity educacionEntity);
     
     ExperienciaEntity actualizarExperiencia(Long idExperiencia, ExperienciaEntity experienciaEntity);
     
     ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity);
-    
+    /*
     ResponseEntity<?> eliminarEducacion(Long idEduacion);
     
     ResponseEntity<?> eliminarExperiencia(Long idExperiencia);

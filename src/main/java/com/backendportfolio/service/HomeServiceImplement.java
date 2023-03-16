@@ -122,7 +122,7 @@ public class HomeServiceImplement implements HomeService{
         return projectRepository.findAll();
     }
 
-    /*
+    
     @Override
     public EducacionEntity agregarEduacion(Long idHome, EducacionEntity educacionEntity){
         return homeRepository.findById(idHome).map(home -> {
@@ -148,6 +148,7 @@ public class HomeServiceImplement implements HomeService{
         }).orElseThrow(() -> new EntityNotFoundException("Error en agregar un proyecto"));
     }
 
+    
     @Override
     public EducacionEntity actualizarEducacion(Long idEduacion, EducacionEntity educacionEntity) {
         return educacionRepository.findById(idEduacion).map(education -> {
@@ -181,7 +182,8 @@ public class HomeServiceImplement implements HomeService{
             return projectRepository.save(project);
         }).orElseThrow(() -> new EntityNotFoundException("Error en actualizar un proyecto"));
     }
-
+    
+/*
     @Override
     public ResponseEntity<?> eliminarEducacion(Long idEduacion) {
         return educacionRepository.findById(idEduacion).map(educacion -> {
