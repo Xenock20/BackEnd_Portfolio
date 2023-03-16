@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -56,12 +57,12 @@ public class HomeServiceImplement implements HomeService{
     }
 
     @Override
-    public List<SkillEntity> mostrarSkills(Long id) {
+    public List<SkillEntity> mostrarSkills() {
         return skillRepository.findAll();
     }
 
     @Override
-    public List<ContactEntity> mostrarContact(Long id) {
+    public List<ContactEntity> mostrarContact() {
         return contactRepository.findAll();
     }
 
@@ -105,64 +106,104 @@ public class HomeServiceImplement implements HomeService{
         }
     }
 
+    
     @Override
     public List<EducacionEntity> mostrarEduaciones() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return educacionRepository.findAll();
     }
 
     @Override
     public List<ExperienciaEntity> mostrarExperiencias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return experienciaRepository.findAll();
     }
 
     @Override
     public List<ProjectEntity> mostrarProjects() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return projectRepository.findAll();
     }
 
+    /*
     @Override
-    public EducacionEntity agregarEduacion(Long idHome, EducacionEntity educacionEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public EducacionEntity agregarEduacion(Long idHome, EducacionEntity educacionEntity){
+        return homeRepository.findById(idHome).map(home -> {
+            educacionEntity.setHome(home);
+            return educacionRepository.save(educacionEntity);
+        }).orElseThrow(() -> new EntityNotFoundException("Error en agregar una educacion"));
     }
 
+    
     @Override
     public ExperienciaEntity agregarExperiencia(Long idHome, ExperienciaEntity experienciaEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return homeRepository.findById(idHome).map(home -> {
+            experienciaEntity.setHome(home);
+            return experienciaRepository.save(experienciaEntity);
+        }).orElseThrow(() -> new EntityNotFoundException("Error en agregar una experiencia"));
     }
 
     @Override
     public ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return homeRepository.findById(idHome).map(home -> {
+            projectEntity.setHome(home);
+            return projectRepository.save(projectEntity);
+        }).orElseThrow(() -> new EntityNotFoundException("Error en agregar un proyecto"));
     }
 
     @Override
-    public EducacionEntity actualizarEducacion(Long idHome, Long idEduacion, EducacionEntity educacionEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public EducacionEntity actualizarEducacion(Long idEduacion, EducacionEntity educacionEntity) {
+        return educacionRepository.findById(idEduacion).map(education -> {
+            education.setFechaDeInicio(educacionEntity.getFechaDeInicio());
+            education.setFechaDeFinalizacion(educacionEntity.getFechaDeFinalizacion());
+            education.setTituloEducacion(educacionEntity.getTituloEducacion());
+            education.setUbicacion(educacionEntity.getUbicacion());
+            return educacionRepository.save(education);
+        }).orElseThrow(() -> new EntityNotFoundException("Error en actualizar una educacion"));
     }
 
     @Override
-    public ExperienciaEntity actualizarExperiencia(Long idHome, Long idExperiencia, ExperienciaEntity experienciaEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ExperienciaEntity actualizarExperiencia(Long idExperiencia, ExperienciaEntity experienciaEntity) {
+        return experienciaRepository.findById(idExperiencia).map(experiencia -> {
+            experiencia.setFechaDeInicio(experienciaEntity.getFechaDeInicio());
+            experiencia.setFechaDeFinalizacion(experienciaEntity.getFechaDeFinalizacion());
+            experiencia.setTituloExperiencia(experienciaEntity.getTituloExperiencia());
+            experiencia.setUbicacion(experienciaEntity.getUbicacion());
+            return experienciaRepository.save(experiencia);
+        }).orElseThrow(() -> new EntityNotFoundException("Error en actualizar una experienci"));
     }
 
     @Override
-    public ProjectEntity actualizarProject(Long idHome, Long idProject, ProjectEntity projectEntity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity) {
+        return projectRepository.findById(idProject).map(project -> {
+            project.setDescripcionProject(projectEntity.getDescripcionProject());
+            project.setLinkCodeProject(projectEntity.getLinkCodeProject());
+            project.setLinkDemoProject(projectEntity.getLinkDemoProject());
+            project.setNombreProject(projectEntity.getNombreProject());
+            project.setUrlImageProject(projectEntity.getUrlImageProject());
+            return projectRepository.save(project);
+        }).orElseThrow(() -> new EntityNotFoundException("Error en actualizar un proyecto"));
     }
 
     @Override
-    public void eliminarEducacion(Long idHome, Long idEduacion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ResponseEntity<?> eliminarEducacion(Long idEduacion) {
+        return educacionRepository.findById(idEduacion).map(educacion -> {
+           educacionRepository.delete(educacion);
+           return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new EntityNotFoundException("Error en eliminar una educacion"));
     }
 
     @Override
-    public void eliminarExperiencia(Long idHome, Long idExperiencia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ResponseEntity<?> eliminarExperiencia(Long idExperiencia) {
+        return experienciaRepository.findById(idExperiencia).map(experiencia -> {
+            experienciaRepository.delete(experiencia);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new EntityNotFoundException("Error en eliminar una experiencia"));
     }
 
     @Override
-    public void eliminarProject(Long idHome, Long idProject) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ResponseEntity<?> eliminarProject(Long idProject) {
+        return projectRepository.findById(idProject).map(project -> {
+            projectRepository.delete(project);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new EntityNotFoundException("Error en eliminar un proyecto"));
     }
-    
+    */
 }

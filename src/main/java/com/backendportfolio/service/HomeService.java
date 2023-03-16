@@ -3,6 +3,7 @@ package com.backendportfolio.service;
 
 import com.backendportfolio.model.*;
 import java.util.List;
+//import org.springframework.http.ResponseEntity;
 
 
 public interface HomeService {
@@ -11,13 +12,14 @@ public interface HomeService {
     
     HomeEntity actualizarHome(Long id, HomeEntity homeEntity);
     
-    List<SkillEntity> mostrarSkills(Long id);
+    List<SkillEntity> mostrarSkills();
     
-    List<ContactEntity> mostrarContact(Long id);
+    List<ContactEntity> mostrarContact();
     
     SkillEntity actualizarSkills(Long id, SkillEntity skillEntity);
     
     ContactEntity actualizarContact(Long id, ContactEntity contactEntity);
+    
     
     List<EducacionEntity> mostrarEduaciones();
     
@@ -25,21 +27,23 @@ public interface HomeService {
     
     List<ProjectEntity> mostrarProjects();
     
+    /*
     EducacionEntity agregarEduacion(Long idHome, EducacionEntity educacionEntity);
     
     ExperienciaEntity agregarExperiencia(Long idHome, ExperienciaEntity experienciaEntity);
     
     ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity);
     
-    EducacionEntity actualizarEducacion(Long idHome, Long idEduacion, EducacionEntity educacionEntity);
+    EducacionEntity actualizarEducacion(Long idEduacion, EducacionEntity educacionEntity);
     
-    ExperienciaEntity actualizarExperiencia(Long idHome, Long idExperiencia, ExperienciaEntity experienciaEntity);
+    ExperienciaEntity actualizarExperiencia(Long idExperiencia, ExperienciaEntity experienciaEntity);
     
-    ProjectEntity actualizarProject(Long idHome, Long idProject, ProjectEntity projectEntity);
+    ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity);
     
-    void eliminarEducacion(Long idHome, Long idEduacion);
+    ResponseEntity<?> eliminarEducacion(Long idEduacion);
     
-    void eliminarExperiencia(Long idHome, Long idExperiencia);
+    ResponseEntity<?> eliminarExperiencia(Long idExperiencia);
     
-    void eliminarProject(Long idHome, Long idProject);
+    ResponseEntity<?> eliminarProject(Long idProject);
+*/
 }
