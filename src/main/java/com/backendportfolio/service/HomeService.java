@@ -11,7 +11,9 @@ public interface HomeService {
     
     List<HomeEntity> mostrarHome();
     
-    HomeEntity actualizarHome(Long id, HomeEntity homeEntity, MultipartFile file);
+    HomeEntity actualizarHome(Long id, HomeEntity homeEntity);
+    
+    ResponseEntity<?> actualizarImagenHome(Long id, String url);
     
     List<SkillEntity> mostrarSkills();
     
@@ -20,7 +22,6 @@ public interface HomeService {
     SkillEntity actualizarSkills(Long id, SkillEntity skillEntity);
     
     ContactEntity actualizarContact(Long id, ContactEntity contactEntity);
-    
     
     List<EducacionEntity> mostrarEduaciones();
     
@@ -32,13 +33,15 @@ public interface HomeService {
     
     ExperienciaEntity agregarExperiencia(Long idHome, ExperienciaEntity experienciaEntity);
     
-    ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity, MultipartFile file);   
+    ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity);   
     
     EducacionEntity actualizarEducacion(Long idEduacion, EducacionEntity educacionEntity);
     
     ExperienciaEntity actualizarExperiencia(Long idExperiencia, ExperienciaEntity experienciaEntity);
     
-    ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity, MultipartFile file);
+    ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity);
+    
+    ResponseEntity<?> actualizarImagenProject(Long id, String url);
 
     ResponseEntity<?> eliminarEducacion(Long idEduacion);
     

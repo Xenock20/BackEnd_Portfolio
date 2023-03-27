@@ -4,22 +4,14 @@ package com.backendportfolio.service;
 import com.backendportfolio.model.*;
 import com.backendportfolio.repository.*;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
-@AllArgsConstructor
 public class HomeServiceImplement implements HomeService{
-    
-    private final StorageService storageService;
-    private final HttpServletRequest request;
 
     @Autowired
     private HomeRepository homeRepository;
@@ -46,28 +38,19 @@ public class HomeServiceImplement implements HomeService{
     }
 
     @Override
-    public HomeEntity actualizarHome(Long id, HomeEntity homeActualizado, MultipartFile file) {
+    public HomeEntity actualizarHome(Long id, HomeEntity homeActualizado) {
         
         Optional<HomeEntity> homeExitente = homeRepository.findById(id);
         
         if(homeExitente.isPresent()){
-            
-            String path = storageService.store(file);
-            String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-            String url = ServletUriComponentsBuilder
-                .fromHttpUrl(host)
-                .path("/media/")
-                .path(path)
-                .toUriString();
             
             HomeEntity home = homeExitente.get();
             
             home.setNombreCompleto(homeActualizado.getNombreCompleto());
             home.setTituloHome(homeActualizado.getTituloHome());
             home.setDescripcionHome(homeActualizado.getDescripcionHome());
-            home.setUrlImageHome(url);
             
-            return home;
+            return homeRepository.save(home);
         } else {
             throw new EntityNotFoundException("Objeto no encontrado");
         }
@@ -99,7 +82,7 @@ public class HomeServiceImplement implements HomeService{
             skill.setPythonSkill(skillActualizado.isPythonSkill());
             skill.setReactSkill(skillActualizado.isReactSkill());
             
-            return skill;
+            return skillRepository.save(skill);
         } else {
             throw new EntityNotFoundException("Objeto no encontrado");
         }
@@ -117,7 +100,7 @@ public class HomeServiceImplement implements HomeService{
             contact.setIg(contactActualizado.getIg());
             contact.setLinkedin(contactActualizado.getLinkedin());
             
-            return contact;
+            return contactRepository.save(contact);
         } else {
             throw new EntityNotFoundException("Objeto no encontrado");
         }
@@ -156,19 +139,9 @@ public class HomeServiceImplement implements HomeService{
     }
 
     @Override
-    public ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity, MultipartFile file) {
+    public ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity) {
         return homeRepository.findById(idHome).map(home -> {
             projectEntity.setHome(home);
-            
-            String path = storageService.store(file);
-            String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-            String url = ServletUriComponentsBuilder
-                .fromHttpUrl(host)
-                .path("/media/")
-                .path(path)
-                .toUriString();
-            
-            projectEntity.setUrlImageProject(url);
             
             return projectRepository.save(projectEntity);
         }).orElseThrow(() -> new EntityNotFoundException("Error en agregar un proyecto"));
@@ -197,22 +170,13 @@ public class HomeServiceImplement implements HomeService{
     }
 
     @Override
-    public ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity, MultipartFile file) {
+    public ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity) {
         return projectRepository.findById(idProject).map(project -> {
-            
-            String path = storageService.store(file);
-            String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-            String url = ServletUriComponentsBuilder
-                .fromHttpUrl(host)
-                .path("/media/")
-                .path(path)
-                .toUriString();
             
             project.setDescripcionProject(projectEntity.getDescripcionProject());
             project.setLinkCodeProject(projectEntity.getLinkCodeProject());
             project.setLinkDemoProject(projectEntity.getLinkDemoProject());
             project.setNombreProject(projectEntity.getNombreProject());
-            project.setUrlImageProject(url);
             return projectRepository.save(project);
         }).orElseThrow(() -> new EntityNotFoundException("Error en actualizar un proyecto"));
     }
@@ -239,5 +203,41 @@ public class HomeServiceImplement implements HomeService{
             projectRepository.delete(project);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new EntityNotFoundException("Error en eliminar un proyecto"));
+    }
+
+    @Override
+    public ResponseEntity<?> actualizarImagenHome(Long id, String url) {
+        Optional<HomeEntity> homeExitente = homeRepository.findById(id);
+        
+        if(homeExitente.isPresent()){
+            
+            HomeEntity home = homeExitente.get();
+            
+            home.setUrlImageHome(url);
+            
+            homeRepository.save(home);
+            
+            return ResponseEntity.ok().build();
+        } else {
+            throw new EntityNotFoundException("Objeto no encontrado");
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> actualizarImagenProject(Long id, String url) {
+        Optional<ProjectEntity> projectExitente = projectRepository.findById(id);
+        
+        if(projectExitente.isPresent()){
+            
+            ProjectEntity project = projectExitente.get();
+            
+            project.setUrlImageProject(url);
+            
+            projectRepository.save(project);
+            
+            return ResponseEntity.ok().build();
+        } else {
+            throw new EntityNotFoundException("Objeto no encontrado");
+        }
     }
 }
