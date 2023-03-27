@@ -4,13 +4,14 @@ package com.backendportfolio.service;
 import com.backendportfolio.model.*;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public interface HomeService {
     
     List<HomeEntity> mostrarHome();
     
-    HomeEntity actualizarHome(Long id, HomeEntity homeEntity);
+    HomeEntity actualizarHome(Long id, HomeEntity homeEntity, MultipartFile file);
     
     List<SkillEntity> mostrarSkills();
     
@@ -31,13 +32,13 @@ public interface HomeService {
     
     ExperienciaEntity agregarExperiencia(Long idHome, ExperienciaEntity experienciaEntity);
     
-    ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity);   
+    ProjectEntity agregarProject(Long idHome, ProjectEntity projectEntity, MultipartFile file);   
     
     EducacionEntity actualizarEducacion(Long idEduacion, EducacionEntity educacionEntity);
     
     ExperienciaEntity actualizarExperiencia(Long idExperiencia, ExperienciaEntity experienciaEntity);
     
-    ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity);
+    ProjectEntity actualizarProject(Long idProject, ProjectEntity projectEntity, MultipartFile file);
 
     ResponseEntity<?> eliminarEducacion(Long idEduacion);
     
